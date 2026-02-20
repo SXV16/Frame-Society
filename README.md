@@ -1,27 +1,215 @@
-# ProjectRaphaelFrameSociety
+# 👑 Raphael Frame Society
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+**Tagline:**  
+Anime made us. Cinema shaped us. Gaming leveled us. Raphael frames us.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🌌 Project Overview
 
-## Code scaffolding
+Raphael Frame Society is a premium entertainment-focused platform dedicated to:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Anime
+- Manga
+- Movies
+- Movie Series
+- Gaming
+- Adult (BL & GL – Age Restricted)
 
-## Build
+The platform is designed with a luxury dark aesthetic using purple, gold, black, and white highlights.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🎯 Project Goals
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Provide a central hub for anime, gaming, and cinema enthusiasts.
+- Include genre-based categorization for easy discovery.
+- Implement a secure adult section (BL & GL) with age verification.
+- Offer Wishlist and Cart functionality.
+- Allow users to subscribe to newsletters.
+- Enable suggestion submissions.
+- Provide checkout with delivery instructions and payment options.
+- Fully responsive design (Mobile, Tablet, Desktop).
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🧱 Tech Stack
 
-## Further help
+- Angular 14
+- TypeScript
+- SCSS
+- HTML5
+- JavaScript
+- Angular Router
+- Angular Guards
+- LocalStorage / JWT (Authentication)
+- Stripe or PayPal API (Future Integration)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+## 🎨 UI / Design System
+
+### Color Palette
+
+- Royal Purple: #4B0082
+- Deep Purple: #2E0854
+- Gold Accent: #FFD700
+- Black: #000000
+- White Highlight: #FFFFFF
+
+### Typography
+
+Display Fonts:
+- Bebas Neue
+- Impact
+- Lobster
+- Anime/Gaming styled fonts
+
+---
+
+## 🔐 Adult Section Policy
+
+The adult section includes:
+
+- BL (Boys Love)
+- GL (Girls Love)
+
+Security Features:
+- Age verification required (18+)
+- Valid government ID upload
+- Authentication guard
+- Restricted routing
+- Content hidden unless verified
+
+---
+
+## 🗂 Feature Modules
+
+### Core Features
+
+- Authentication
+- Age Verification
+- Wishlist
+- Cart
+- Newsletter Subscription
+- Suggestion Box
+- Checkout System
+- Payment Integration
+- Delivery Instructions
+
+---
+
+## 📦 Application Modules
+
+- Home Module
+- Genres Module
+- Adult Module
+- Wishlist Module
+- Cart Module
+- Checkout Module
+- Contact Module
+- Admin Module
+
+---
+
+## 🛒 E-Commerce Flow
+
+1. Browse genres
+2. Add to wishlist
+3. Add to cart
+4. Enter delivery instructions
+5. Choose payment method
+6. Confirm order
+
+---
+
+## 📬 Suggestion System
+
+Users can:
+- Suggest missing anime
+- Suggest manga titles
+- Suggest games
+- Suggest movies
+- Report missing genres
+
+Submissions stored via:
+- API backend (recommended)
+- Firebase (optional)
+- Node.js server
+
+---
+
+## 📱 Responsive Design
+
+Fully adaptable for:
+- Desktop
+- Tablet
+- Mobile
+
+Uses:
+- Flexbox
+- CSS Grid
+- Media Queries
+
+---
+
+## 🔧 Installation Guide
+
+```bash
+npm install -g @angular/cli@14
+ng new raphael-frame-society
+cd raphael-frame-society
+npm install
+ng serve
+```
+
+Open:
+```
+http://localhost:4200
+```
+
+---
+
+## 🚀 Future Improvements
+
+- User Accounts
+- Admin Dashboard
+- Content Management System
+- AI Recommendation Engine
+- Community Forum
+- Dark/Light Theme Toggle
+- Multi-language Support
+- Progressive Web App (PWA)
+
+---
+
+## 🔒 Security Considerations
+
+- JWT Authentication
+- Role-based access
+- Route Guards
+- HTTPS required
+- ID verification encryption
+- Payment tokenization
+
+---
+
+## 👑 Brand Identity
+
+Raphael Frame Society represents:
+- Passion for anime
+- Respect for cinema
+- Dedication to gaming culture
+- Premium exclusive community
+
+---
+
+## 📜 License
+
+Private Project – All Rights Reserved.
+
+---
+
+## ✨ Created By
+
+Raphael Frame Society

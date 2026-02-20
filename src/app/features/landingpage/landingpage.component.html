@@ -1,0 +1,352 @@
+<!-- landing.component.html -->
+<div class="flex flex-col min-h-screen">
+
+  <!-- Navigation -->
+  <app-nav></app-nav>
+  
+  <!-- Hero Section -->
+  <header class="relative w-full h-screen flex items-center justify-center overflow-hidden hero-bg">
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--deep-purple)]/80 via-[var(--deep-purple)]/40 to-black z-10"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-0"></div>
+
+    <div class="relative z-20 container mx-auto px-6 text-center flex flex-col items-center">
+
+      <!-- Icon -->
+      <div class="mb-8 p-6 rounded-full border border-[var(--gold)]/30 bg-[var(--deep-purple)]/30 backdrop-blur-sm shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+        <span class="material-symbols-outlined text-6xl text-[var(--gold)] text-glow">camera_roll</span>
+      </div>
+
+      <!-- Hero Heading -->
+      <h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight drop-shadow-2xl">
+        <span class="block mb-2">ANIME MADE US.</span>
+        <span class="block mb-2 text-gray-300">CINEMA SHAPED US.</span>
+        <span class="block mb-2">GAMING LEVELED US.</span>
+        <span class="block text-[var(--gold)] text-glow mt-4">RAPHAEL FRAMES US.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-gray-300 text-lg md:text-xl max-w-2xl mb-12 font-light tracking-wide leading-relaxed">
+        The premiere society for collectors, viewers, and gamers. Curated frames, exclusive merchandise, and a community built on obsession.
+      </p>
+
+      <!-- CTA Button -->
+      <a
+        class="group relative px-10 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300 border border-[var(--gold)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] cursor-pointer">
+        <div class="absolute inset-0 w-0 bg-[var(--gold)] transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
+        <span class="relative sci-fi-font font-bold text-[var(--gold)] tracking-[0.2em] group-hover:text-white transition-colors duration-300 flex items-center gap-3">
+          ENTER WEBSITE <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </span>
+      </a>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">Scroll</span>
+        <div class="h-16 w-[1px] bg-gradient-to-b from-[var(--gold)] to-transparent"></div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Curated Collections Section -->
+  <section class="py-24 bg-black relative">
+    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
+
+    <div class="container mx-auto px-6 relative z-20">
+
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-[var(--gold)]/20 pb-6">
+        <div>
+          <h2 class="text-4xl md:text-5xl text-white mb-2">Curated Collections</h2>
+          <p class="text-gray-400 font-light">Explore our premium selection of frames and merchandise</p>
+        </div>
+        <a
+          class="text-[var(--gold)] hover:text-white transition-colors uppercase text-sm tracking-widest mt-6 md:mt-0 flex items-center gap-2 cursor-pointer">
+          View All Categories <span class="material-symbols-outlined text-sm">chevron_right</span>
+        </a>
+      </div>
+
+      <!-- Collection Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <a
+          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
+
+          <img
+            src="https://via.placeholder.com/400x600"
+            alt="Anime Collection"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+
+          <div class="absolute bottom-0 left-0 p-8 w-full">
+            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
+              Category 01
+            </span>
+            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
+              Anime Collection
+            </h3>
+            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+              Premium frames featuring iconic anime scenes and characters.
+            </p>
+            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </a>
+
+        <a
+          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
+
+          <img
+            src="https://via.placeholder.com/400x600"
+            alt="Cinema Collection"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+
+          <div class="absolute bottom-0 left-0 p-8 w-full">
+            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
+              Category 02
+            </span>
+            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
+              Cinema Collection
+            </h3>
+            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+              Classic and modern movie frames for the discerning cinephile.
+            </p>
+            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </a>
+
+        <a
+          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
+
+          <img
+            src="https://via.placeholder.com/400x600"
+            alt="Gaming Collection"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+
+          <div class="absolute bottom-0 left-0 p-8 w-full">
+            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
+              Category 03
+            </span>
+            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
+              Gaming Collection
+            </h3>
+            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+              Epic gaming moments framed for the ultimate gamer experience.
+            </p>
+            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-24 bg-[var(--deep-purple)] relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--royal-purple)]/20 to-transparent"></div>
+    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-[var(--gold)]/10 rounded-full blur-3xl"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+
+        <span class="material-symbols-outlined text-[var(--gold)] text-5xl mb-6">mark_email_unread</span>
+
+        <h2 class="text-5xl md:text-6xl text-white mb-4">Join The Society</h2>
+
+        <p class="text-gray-300 mb-10 text-lg font-light">
+          Subscribe to receive exclusive drops, behind-the-scenes content, and early access to limited frames.
+        </p>
+
+        <!-- Newsletter Form -->
+        <form
+          class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
+
+          <input
+            class="flex-grow bg-black/40 border border-[var(--gold)]/30 text-white placeholder-gray-500 px-6 py-4 focus:outline-none focus:border-[var(--gold)] focus:ring-1 focus:ring-[var(--gold)] transition-all font-light tracking-wide"
+            placeholder="ENTER YOUR EMAIL"
+            type="email"
+          />
+
+          <button
+            class="bg-[var(--gold)] text-[var(--deep-purple)] px-8 py-4 font-bold tracking-widest hover:bg-white transition-colors duration-300 uppercase heading-font text-xl"
+            type="submit">
+            Subscribe
+          </button>
+        </form>
+
+        <p class="text-gray-500 text-xs mt-4">
+          By subscribing you agree to our Terms &amp; Conditions and Privacy Policy.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black border-t border-[var(--gold)]/20 pt-20 pb-10">
+    <div class="container mx-auto px-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+
+        <!-- Brand Column -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-6">
+            <span class="material-symbols-outlined text-[var(--gold)]">movie_filter</span>
+            <span class="heading-font text-2xl tracking-widest text-white">
+              RAPHAEL <span class="text-[var(--gold)]">FRAME</span>
+            </span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed mb-6">
+            The ultimate destination for pop-culture enthusiasts. We frame the moments that define generations.
+          </p>
+          <div class="flex gap-4">
+            <a
+              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">facebook</span>
+            </a>
+            <a
+              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">twitter</span>
+            </a>
+            <a
+              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">instagram</span>
+            </a>
+            <a
+              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">youtube</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Discover Column -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Discover</h4>
+          <ul class="space-y-3 text-gray-500 text-sm">
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Collections
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Artists
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Frames
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Support Column -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Support</h4>
+          <ul class="space-y-3 text-gray-500 text-sm">
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Contact Us
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Shipping Info
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Returns
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Legal Column -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Legal</h4>
+          <ul class="space-y-3 text-gray-500 text-sm">
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Terms of Service
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Cookie Policy
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:text-[var(--gold)] transition-colors">
+                Accessibility
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-600 text-xs">
+          © 2026 Raphael Frame Society. All rights reserved.
+        </p>
+        <div class="flex gap-4">
+          <div
+            class="h-6 w-10 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+            VISA
+          </div>
+          <div
+            class="h-6 w-10 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+            MC
+          </div>
+          <div
+            class="h-6 w-10 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+            AMEX
+          </div>
+          <div
+            class="h-6 w-10 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-500">
+            PP
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</div>

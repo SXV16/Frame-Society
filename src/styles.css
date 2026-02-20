@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --deep-purple: #5E239D;
+  --gold: #D4AF37;
+  --royal-purple: #120f16;
+  --background-light: #ffffff;
+  --background-dark: #5E239D;
+  --text-light: #181611;
+  --text-dark: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.heading-font {
+  font-family: 'Orbitron', monospace;
+}
+
+.sci-fi-font {
+  font-family: 'Orbitron', monospace;
+}
+
+.font-display {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', monospace;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.cinematic-bg {
+  background: linear-gradient(135deg, #5E239D 0%, #120f16 50%, #0d0a10 100%);
+}
+
+.hero-bg {
+  background: url('https://via.placeholder.com/1920x1080/5E239D/eebd37?text=Hero+Background') center/cover no-repeat;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(238, 189, 55, 0.5);
+}
+
+.drop-shadow-2xl {
+  filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+}
+
+.zoom-container {
+  overflow: hidden;
+}
+
+.zoom-image {
+  transition: transform 0.3s ease;
+}
+
+.zoom-container:hover .zoom-image {
+  transform: scale(1.1);
+}

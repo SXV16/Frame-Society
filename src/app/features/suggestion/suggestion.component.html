@@ -1,0 +1,165 @@
+<!-- suggestion-box.component.html -->
+<div class="min-h-screen flex flex-col relative cinematic-bg">
+  <div class="watermark"></div>
+
+  <app-nav></app-nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl w-full space-y-8">
+
+      <!-- Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center p-3 bg-[rgba(94,35,157,0.1)] rounded-full mb-4 border border-[rgba(94,35,157,0.3)]">
+          <span class="material-symbols-outlined text-[var(--gold)] text-4xl">campaign</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold text-white tracking-wider mb-2 drop-shadow-lg">
+          THE <span class="gold-text">FRAME</span> IS YOURS
+        </h1>
+        <p class="mt-2 text-lg text-gray-300 max-w-xl mx-auto font-light">
+          Have a movie, anime, or game that defined you? Tell us what masterpiece belongs in the Raphael collection.
+        </p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="bg-[rgba(20,20,20,0.6)] backdrop-blur-xl border border-[var(--royal-purple)] shadow-[0_0_30px_rgba(94,35,157,0.2)] rounded-lg p-8 md:p-10 relative overflow-hidden group">
+        
+        <!-- Corner Decorations -->
+        <div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-[var(--gold)] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+        <div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-[var(--gold)] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+
+        <!-- Form -->
+        <form 
+          class="space-y-6 mt-2 relative z-10">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Suggestion Type -->
+            <div class="space-y-2">
+              <label 
+                class="block text-sm font-bold uppercase tracking-widest text-[var(--gold)]" 
+                for="category">
+                Suggestion Type
+              </label>
+              <div class="relative">
+                <select 
+                  class="form-input block w-full rounded-md py-3 pl-4 pr-10 text-base sm:text-sm appearance-none cursor-pointer" 
+                  id="category" 
+                  name="category">
+                  <option value="" disabled>Select a category...</option>
+                  <option value="anime">Anime</option>
+                  <option value="movie">Movie</option>
+                  <option value="game">Game</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--gold)]">
+                  <span class="material-symbols-outlined text-sm">expand_more</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Title -->
+            <div class="space-y-2">
+              <label 
+                class="block text-sm font-bold uppercase tracking-widest text-[var(--gold)]" 
+                for="title">
+                Title of Work
+              </label>
+              <input 
+                class="form-input block w-full rounded-md py-3 px-4 text-base sm:text-sm placeholder-gray-500" 
+                id="title" 
+                name="title" 
+                type="text"
+                placeholder="e.g. Akira, Blade Runner 2049..."
+                maxlength="100"
+              />
+            </div>
+
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-2">
+            <label 
+              class="block text-sm font-bold uppercase tracking-widest text-[var(--gold)]" 
+              for="description">
+              Why it belongs here
+            </label>
+            <div class="relative">
+              <textarea 
+                class="form-input block w-full rounded-md py-3 px-4 text-base sm:text-sm placeholder-gray-500 resize-none" 
+                id="description" 
+                name="description"
+                rows="6"
+                placeholder="Describe the cultural impact, your favorite scene, or why this fits the Raphael Frame Society aesthetic..."
+                maxlength="500">
+              </textarea>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <button 
+              class="w-full flex justify-center items-center gap-3 py-4 px-4 border border-transparent rounded-md text-xl font-bold text-black bg-[var(--gold)] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--gold)] focus:ring-offset-gray-900 transition-all duration-300 transform hover:-translate-y-1 gold-glow font-orbitron uppercase tracking-widest"
+              type="submit">
+              <span class="material-symbols-outlined">send</span>
+              Submit Suggestion
+            </button>
+            <p class="text-center text-xs text-gray-500 mt-4 italic">
+              By submitting, you agree that your suggestion may be featured in our community polls.
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- Community Pulse -->
+      <div class="mt-8 border-t border-[rgba(255,255,255,0.1)] pt-6">
+        <h3 class="text-center text-gray-400 text-sm tracking-[0.2em] mb-4 uppercase">
+          Community Pulse
+        </h3>
+        <div class="flex flex-wrap justify-center gap-4 opacity-70">
+          <span class="px-3 py-1 bg-[rgba(94,35,157,0.3)] rounded text-xs text-gray-300 border border-[rgba(255,255,255,0.05)]">
+            Akira
+          </span>
+          <span class="px-3 py-1 bg-[rgba(94,35,157,0.3)] rounded text-xs text-gray-300 border border-[rgba(255,255,255,0.05)]">
+            Blade Runner 2049
+          </span>
+          <span class="px-3 py-1 bg-[rgba(94,35,157,0.3)] rounded text-xs text-gray-300 border border-[rgba(255,255,255,0.05)]">
+            Cyberpunk 2077
+          </span>
+          <span class="px-3 py-1 bg-[rgba(94,35,157,0.3)] rounded text-xs text-gray-300 border border-[rgba(255,255,255,0.05)]">
+            Ghost in the Shell
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-50 bg-black py-8 border-t border-[rgba(255,255,255,0.1)]">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-2xl text-white mb-2 tracking-widest">RAPHAEL FRAME SOCIETY</h2>
+      <p class="text-gray-500 text-sm mb-6">Anime Made Us. Cinema Shaped Us. Gaming Leveled Us.</p>
+      
+      <div class="flex justify-center gap-6 mb-6">
+        <a class="text-gray-400 hover:text-[var(--gold)] text-sm cursor-pointer">
+          Home
+        </a>
+        <a class="text-gray-400 hover:text-[var(--gold)] text-sm cursor-pointer">
+          Store
+        </a>
+        <a class="text-gray-400 hover:text-[var(--gold)] text-sm cursor-pointer">
+          Community
+        </a>
+        <a class="text-gray-400 hover:text-[var(--gold)] text-sm cursor-pointer">
+          About
+        </a>
+      </div>
+
+      <p class="text-gray-600 text-xs">© 2026 Raphael Frame Society. All rights reserved.</p>
+    </div>
+  </footer>
+
+</div>
