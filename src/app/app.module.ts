@@ -10,6 +10,7 @@ import { SuggestionComponent } from './features/suggestion/suggestion.component'
 import { NavComponent } from './shared/nav/nav.component';
 import { LandingpageComponent } from './features/landingpage/landingpage.component';
 import { CartComponent } from './features/cart/cart.component';
+import { AdultsSectionComponent } from './features/adults-section/adults-section.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CartComponent } from './features/cart/cart.component';
     SuggestionComponent,
     NavComponent,
     CartComponent,
+    AdultsSectionComponent,
   ],
   imports: [
     BrowserModule,
