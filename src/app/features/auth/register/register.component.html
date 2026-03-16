@@ -1,0 +1,42 @@
+<div class="page">
+  <app-nav></app-nav>
+  <div class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+      <div class="card card-elevated p-8">
+        <h1 class="heading-page">Create account</h1>
+        <p class="text-sm text-white/80 mb-6">Name, email, password, and role.</p>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label class="input-label">Name (optional)</label>
+            <input type="text" formControlName="name" class="input" placeholder="Your name" />
+          </div>
+          <div class="mb-4">
+            <label class="input-label">Email</label>
+            <input type="email" formControlName="email" class="input" placeholder="you@example.com" />
+            <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-red-400 text-xs mt-1">Enter a valid email.</p>
+          </div>
+          <div class="mb-4">
+            <label class="input-label">Password</label>
+            <input type="password" formControlName="password" class="input" placeholder="••••••••" />
+            <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-red-400 text-xs mt-1">Password must be at least 6 characters.</p>
+          </div>
+          <div class="mb-6">
+            <label class="input-label">Role</label>
+            <select formControlName="role" class="input">
+              <option value="buyer">Buyer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <p *ngIf="error" class="alert alert-error">{{ error }}</p>
+          <button type="submit" [disabled]="loading" class="btn-primary">
+            {{ loading ? 'Creating account…' : 'Register' }}
+          </button>
+        </form>
+        <p class="text-center text-white/80 text-sm mt-6">
+          Already have an account? <a routerLink="/login" class="link-primary">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,354 +1,76 @@
-<!-- product-detail.component.html -->
-<div class="bg-[var(--background-light)] dark:bg-[var(--background-dark)] text-[var(--text-light)] dark:text-[var(--text-dark)] font-display min-h-screen flex flex-col cinematic-bg">
+<div class="page cinematic-bg">
+  <app-nav></app-nav>
+  <div class="page-main page-main-wide mx-auto">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a routerLink="/" class="breadcrumb__link">Home</a>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <a routerLink="/store" class="breadcrumb__link">Store</a>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <span class="breadcrumb__current" *ngIf="product">{{ product.title }}</span>
+    </nav>
+    <p *ngIf="loading" class="text-white">Loading…</p>
+    <p *ngIf="!loading && !product" class="text-white">Product not found.</p>
 
-  <!-- Header -->
-<app-nav>   </app-nav>
-<br/>
-
-  <!-- Breadcrumbs -->
-  <div class="px-6 py-4 lg:px-20 text-sm">
-    <div class="flex flex-wrap gap-2 items-center text-gray-400">
-      <a class="hover:text-[var(--gold)] transition-colors">Home</a>
-      <span class="material-symbols-outlined text-[12px]">chevron_right</span>
-      <a class="hover:text-[var(--gold)] transition-colors">
-        Collection Name
-      </a>
-      <span class="material-symbols-outlined text-[12px]">chevron_right</span>
-      <span class="text-[var(--gold)] font-medium">Product Title</span>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <main class="flex-grow w-full max-w-[1400px] mx-auto px-6 pb-20 pt-4 lg:px-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20">
-
-      <!-- LEFT COLUMN: Images -->
-      <div class="lg:col-span-7 flex flex-col gap-6">
-
-        <!-- Hero Image -->
-        <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-white/5 group zoom-container bg-black">
-          <img
-            src="https://i.pinimg.com/736x/4f/62/d2/4f62d2bc39cb6092fe4dedb978c285c5.jpg"
-            alt="Product Title"
-            class="w-full h-full object-cover zoom-image"
-          />
-          <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-medium text-white border border-white/10 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">zoom_in</span> Hover to zoom
-          </div>
+    <div *ngIf="product && !loading" class="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 pt-4">
+      <div class="lg:col-span-7">
+        <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-black">
+          <img [src]="productImage()" [alt]="product.title" class="w-full h-full object-cover" />
         </div>
-
-        <!-- Thumbnails Carousel -->
-        <div class="grid grid-cols-4 gap-4">
-          <button
-            class="aspect-square rounded-lg overflow-hidden border-2 border-[var(--gold)] ring-2 ring-[var(--gold)]/20 ring-offset-2 ring-offset-[var(--royal-purple)]">
-            <img
-              src="https://via.placeholder.com/200x200"
-              alt="Thumbnail 1"
-              class="w-full h-full object-cover"
-            />
-          </button>
-          <button
-            class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-white/20 opacity-70 hover:opacity-100">
-            <img
-              src="https://via.placeholder.com/200x200"
-              alt="Thumbnail 2"
-              class="w-full h-full object-cover"
-            />
-          </button>
-          <button
-            class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-white/20 opacity-70 hover:opacity-100">
-            <img
-              src="https://via.placeholder.com/200x200"
-              alt="Thumbnail 3"
-              class="w-full h-full object-cover"
-            />
-          </button>
-          <button
-            class="aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-white/20 opacity-70 hover:opacity-100">
-            <img
-              src="https://via.placeholder.com/200x200"
-              alt="Thumbnail 4"
-              class="w-full h-full object-cover"
-            />
-          </button>
-        </div>
-
       </div>
 
-      <!-- RIGHT COLUMN: Details & Config -->
-      <div class="lg:col-span-5 flex flex-col h-full">
+      <div class="lg:col-span-5 flex flex-col">
         <div class="sticky top-24 space-y-8">
-
-          <!-- Header -->
           <div class="space-y-2 border-b border-white/10 pb-6">
-            <h1 class="font-orbitron text-4xl lg:text-5xl font-bold leading-tight text-white tracking-wide uppercase drop-shadow-[0_0_10px_rgba(238,189,43,0.15)]">
-              Product Title
+            <h1 class="font-orbitron text-4xl lg:text-5xl font-bold leading-tight text-white tracking-wide">
+              {{ product.title }}
             </h1>
             <div class="flex items-center justify-between pt-2">
-              <h2 class="text-3xl font-bold text-[var(--gold)] font-display tracking-tight">
-                $299.99
+              <h2 class="text-3xl font-bold text-[var(--gold)] font-display">
+                ${{ product.price | number:'1.2-2' }}
                 <span class="text-sm font-normal text-gray-400 align-top mt-1 inline-block">USD</span>
               </h2>
-              <div class="flex items-center gap-1 text-[var(--gold)] text-sm">
-                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                <span class="material-symbols-outlined text-[18px] fill-current">star</span>
-                <span class="text-gray-400 ml-1">(42 Reviews)</span>
-              </div>
             </div>
           </div>
 
-          <!-- Configurator -->
-          <div class="space-y-6">
-
-            <!-- Size Selection -->
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-sm font-bold uppercase tracking-wider text-gray-400">Select Size</span>
-                <button
-                  class="text-xs text-[var(--gold)] underline">
-                  Size Guide
-                </button>
-              </div>
-              <div class="grid grid-cols-3 gap-3">
-                <label
-                  class="cursor-pointer group relative">
-                  <input
-                    class="peer sr-only"
-                    type="radio"
-                    name="size"
-                    value="Small"
-                    checked
-                  />
-                  <div class="h-14 rounded-lg bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 peer-checked:text-[var(--gold)] transition-all hover:bg-white/10">
-                    <span class="font-bold text-sm">Small</span>
-                    <span class="text-[10px] text-gray-400 group-hover:text-gray-300">8x10</span>
-                  </div>
-                  <div class="absolute inset-0 border border-[var(--gold)] rounded-lg opacity-100 pointer-events-none shadow-[0_0_15px_rgba(238,189,43,0.3)]"></div>
-                </label>
-                <label
-                  class="cursor-pointer group relative">
-                  <input
-                    class="peer sr-only"
-                    type="radio"
-                    name="size"
-                    value="Medium"
-                  />
-                  <div class="h-14 rounded-lg bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 peer-checked:text-[var(--gold)] transition-all hover:bg-white/10">
-                    <span class="font-bold text-sm">Medium</span>
-                    <span class="text-[10px] text-gray-400 group-hover:text-gray-300">11x14</span>
-                  </div>
-                </label>
-                <label
-                  class="cursor-pointer group relative">
-                  <input
-                    class="peer sr-only"
-                    type="radio"
-                    name="size"
-                    value="Large"
-                  />
-                  <div class="h-14 rounded-lg bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 peer-checked:text-[var(--gold)] transition-all hover:bg-white/10">
-                    <span class="font-bold text-sm">Large</span>
-                    <span class="text-[10px] text-gray-400 group-hover:text-gray-300">16x20</span>
-                  </div>
-                </label>
-              </div>
+          <div class="space-y-6" *ngIf="parseSizes(product.sizes).length">
+            <span class="text-sm font-bold uppercase tracking-wider text-gray-400">Select Size</span>
+            <div class="grid grid-cols-3 gap-3">
+              <label *ngFor="let s of parseSizes(product.sizes)" class="cursor-pointer">
+                <input type="radio" [value]="s" [(ngModel)]="selectedSize" class="peer sr-only" name="size" />
+                <div class="h-14 text-white rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-center peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 peer-checked:text-[var(--gold)] transition-all hover:bg-white/10">
+                  <span class="font-bold text-sm">{{ s }}</span>
+                </div>
+              </label>
             </div>
-
-            <!-- Material Selection -->
-            <div class="space-y-3">
-              <span class="text-sm font-bold uppercase tracking-wider text-gray-400">Frame Material</span>
-              <div class="grid grid-cols-1 gap-3">
-                <label
-                  class="cursor-pointer relative">
-                  <input
-                    class="peer sr-only"
-                    type="radio"
-                    name="material"
-                    value="wood"
-                    checked
-                  />
-                  <div class="p-3 rounded-lg bg-white/5 border border-white/10 flex items-center gap-4 peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 transition-all hover:bg-white/10">
-                    <div class="w-12 h-12 rounded border border-white/10 flex items-center justify-center overflow-hidden"
-                         style="background-color: #8B4513;">
-                    </div>
-                    <div class="flex-1">
-                      <div class="flex justify-between items-center">
-                        <span class="font-bold text-white text-sm">Wood</span>
-                        <span class="text-[var(--gold)] text-sm font-medium">
-                          Included
-                        </span>
-                      </div>
-                      <p class="text-xs text-gray-400 mt-1">Classic wooden frame with natural finish</p>
-                    </div>
-                    <div class="w-5 h-5 rounded-full border border-gray-500 peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)] flex items-center justify-center">
-                      <div class="w-2 h-2 rounded-full bg-black opacity-100"></div>
-                    </div>
-                  </div>
-                </label>
-                <label
-                  class="cursor-pointer relative">
-                  <input
-                    class="peer sr-only"
-                    type="radio"
-                    name="material"
-                    value="metal"
-                  />
-                  <div class="p-3 rounded-lg bg-white/5 border border-white/10 flex items-center gap-4 peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)]/10 transition-all hover:bg-white/10">
-                    <div class="w-12 h-12 rounded border border-white/10 flex items-center justify-center overflow-hidden"
-                         style="background-color: #C0C0C0;">
-                    </div>
-                    <div class="flex-1">
-                      <div class="flex justify-between items-center">
-                        <span class="font-bold text-white text-sm">Metal</span>
-                        <span class="text-[var(--gold)] text-sm font-medium">
-                          +$50
-                        </span>
-                      </div>
-                      <p class="text-xs text-gray-400 mt-1">Modern metal frame with sleek design</p>
-                    </div>
-                    <div class="w-5 h-5 rounded-full border border-gray-500 peer-checked:border-[var(--gold)] peer-checked:bg-[var(--gold)] flex items-center justify-center">
-                      <div class="w-2 h-2 rounded-full bg-black opacity-0"></div>
-                    </div>
-                  </div>
-                </label>
-              </div>
-            </div>
-
           </div>
 
-          <!-- Story of the Frame -->
           <div class="py-4 border-t border-white/10">
-            <h3 class="font-orbitron text-lg text-white mb-2 font-semibold">Story of the Frame</h3>
-            <p class="font-montserrat text-gray-300 text-sm leading-relaxed">
-              This frame tells the story of artistic excellence and timeless beauty. Crafted with precision and passion, it represents the pinnacle of framing artistry.
-            </p>
+            <h3 class="font-orbitron text-lg text-white mb-2 font-semibold">Description</h3>
+            <p class="font-montserrat text-gray-300 text-sm leading-relaxed">{{ product.description || 'No description.' }}</p>
           </div>
 
-          <!-- Action Bar -->
           <div class="pt-2 flex gap-4">
             <div class="flex items-center bg-white/5 rounded-lg border border-white/10">
-              <button
-                class="w-12 h-12 flex items-center justify-center text-white hover:text-[var(--gold)] transition-colors">
+              <button type="button" (click)="decrementQty()" class="w-12 h-12 flex items-center justify-center text-white hover:text-[var(--gold)] transition-colors">
                 <span class="material-symbols-outlined">remove</span>
               </button>
-              <input
-                class="w-12 h-12 bg-transparent border-none text-center text-white font-bold focus:ring-0 appearance-none [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                type="number"
-                value="1"
-                min="1"
-              />
-              <button
-                class="w-12 h-12 flex items-center justify-center text-white hover:text-[var(--gold)] transition-colors">
+              <input type="number" [(ngModel)]="quantity" min="1" class="w-14 bg-transparent border-none text-center text-white font-bold focus:ring-0 outline-none" />
+              <button type="button" (click)="quantity = quantity + 1" class="w-12 h-12 flex items-center justify-center text-white hover:text-[var(--gold)] transition-colors">
                 <span class="material-symbols-outlined">add</span>
               </button>
             </div>
-            <button
-              class="flex-1 h-12 bg-[var(--gold)] text-black font-bold uppercase tracking-wider rounded-lg shadow-[0_0_20px_rgba(238,189,43,0.4)] hover:shadow-[0_0_30px_rgba(238,189,43,0.6)] hover:bg-[var(--gold)] transition-all flex items-center justify-center gap-2">
+            <button type="button" (click)="addToCart()" class="btn-primary flex-1 h-12 flex items-center justify-center gap-2">
               <span class="material-symbols-outlined">shopping_cart</span>
-              Add to Cart
+              {{ addSuccess ? 'Added!' : 'Add to Cart' }}
             </button>
           </div>
 
           <div class="flex items-center justify-center gap-6 text-xs text-gray-500">
-            <span class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-[14px]">local_shipping</span>
-              Free Shipping
-            </span>
-            <span class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-[14px]">verified</span>
-              Authenticity Guaranteed
-            </span>
-            <span class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-[14px]">calendar_month</span>
-              30-Day Returns
-            </span>
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">local_shipping</span> Free Shipping</span>
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span> Authenticity Guaranteed</span>
           </div>
-
         </div>
       </div>
-
     </div>
-
-    <!-- Related Items Section -->
-    <div class="mt-24 border-t border-white/10 pt-10">
-      <h3 class="font-orbitron text-2xl text-white mb-8">You Might Also Like</h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-        <div
-          class="group cursor-pointer">
-          <div class="aspect-[3/4] rounded-lg bg-gray-800 overflow-hidden mb-3 relative">
-            <img
-              src="https://via.placeholder.com/300x400"
-              alt="Related Item 1"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div
-              class="absolute top-2 right-2 text-xs font-bold px-2 py-1 rounded bg-black/60 backdrop-blur-md text-[var(--gold)]">
-              New
-            </div>
-          </div>
-          <h4 class="text-white font-medium text-sm truncate font-orbitron">Related Item 1</h4>
-          <p class="text-gray-400 text-xs mt-1">
-            From $199.99
-          </p>
-        </div>
-
-        <div
-          class="group cursor-pointer">
-          <div class="aspect-[3/4] rounded-lg bg-gray-800 overflow-hidden mb-3 relative">
-            <img
-              src="https://via.placeholder.com/300x400"
-              alt="Related Item 2"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-          <h4 class="text-white font-medium text-sm truncate font-orbitron">Related Item 2</h4>
-          <p class="text-gray-400 text-xs mt-1">
-            From $249.99
-          </p>
-        </div>
-
-        <div
-          class="group cursor-pointer">
-          <div class="aspect-[3/4] rounded-lg bg-gray-800 overflow-hidden mb-3 relative">
-            <img
-              src="https://via.placeholder.com/300x400"
-              alt="Related Item 3"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-          <h4 class="text-white font-medium text-sm truncate font-orbitron">Related Item 3</h4>
-          <p class="text-gray-400 text-xs mt-1">
-            From $179.99
-          </p>
-        </div>
-
-        <div
-          class="group cursor-pointer">
-          <div class="aspect-[3/4] rounded-lg bg-gray-800 overflow-hidden mb-3 relative">
-            <img
-              src="https://via.placeholder.com/300x400"
-              alt="Related Item 4"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-          <h4 class="text-white font-medium text-sm truncate font-orbitron">Related Item 4</h4>
-          <p class="text-gray-400 text-xs mt-1">
-            From $299.99
-          </p>
-        </div>
-
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="border-t border-white/10 bg-[#0d0a10] py-10 px-6 lg:px-20 text-center">
-    <p class="text-gray-500 text-sm">© 2023 Raphael Frame Society. Curated for the Elite Collector.</p>
-  </footer>
-
+  </div>
 </div>

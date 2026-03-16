@@ -1,0 +1,31 @@
+<div class="page">
+  <app-nav></app-nav>
+  <div class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+      <div class="card card-elevated p-8">
+        <h1 class="heading-page">Sign in</h1>
+        <p class="text-sm text-white/80 mb-6">Enter your email and password.</p>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label class="input-label">Email</label>
+            <input type="email" formControlName="email" class="input" placeholder="you@example.com" />
+            <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-red-400 text-xs mt-1">Enter a valid email.</p>
+          </div>
+          <div class="mb-6">
+            <label class="input-label">Password</label>
+            <input type="password" formControlName="password" class="input" placeholder="••••••••" />
+            <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-red-400 text-xs mt-1">Password must be at least 6 characters.</p>
+          </div>
+          <p *ngIf="error" class="alert alert-error">{{ error }}</p>
+          <button type="submit" [disabled]="loading" class="btn-primary">
+            {{ loading ? 'Signing in…' : 'Sign in' }}
+          </button>
+        </form>
+        <p class="text-center text-white/80 text-sm mt-6">
+          No account? <a routerLink="/register" class="link-primary">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

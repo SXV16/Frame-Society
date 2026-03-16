@@ -148,14 +148,39 @@ CREATE TABLE cart_items (
 );
 ```
 
+## Quick Start
+
+1. **Node 16**: Use Node 16+ (`nvm use 16` or install from nodejs.org).
+2. **Database**: Create MySQL DB and run the schema:
+   ```bash
+   mysql -u root -p < schema.sql
+   ```
+3. **Env**: Ensure `backend/.env` has `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, and optionally `JWT_SECRET` (defaults to a dev secret if unset). For production, set a strong `JWT_SECRET`.
+4. **Install and run**:
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+   API runs at `http://localhost:3000`.
+
+If the `users` table already exists without `password_hash`, run: `ALTER TABLE users ADD COLUMN password_hash VARCHAR(255);`
+
+## Postman
+
+Import the collection to test all endpoints:
+
+- **File**: `backend/postman/Raphael-Frame-Society-API.postman_collection.json`
+- In Postman: **Import** → choose this file.
+- Collection variables: `baseUrl` = `http://localhost:3000`, `sessionId` = any string for cart.
+
 ## Next Steps
 
-1. Set up Node.js project with Express.
-2. Configure database connection.
-3. Implement models and migrations.
-4. Create API routes.
+1. ~~Set up Node.js project with Express.~~
+2. ~~Configure database connection.~~
+3. ~~Implement models and migrations.~~
+4. ~~Create API routes.~~
 5. Add validation and error handling.
 6. Implement authentication for admin features.
-7. Test endpoints with Postman or similar.
-8. Deploy to server (e.g., Heroku, AWS).</content>
-<parameter name="filePath">c:\Users\racqu\OneDrive\Desktop\Project.Raphael.Frame.Society\Project.Raphael.Frame.Society\backend\README.md 
+7. ~~Test endpoints with Postman or similar.~~
+8. Deploy to server (e.g., Heroku, AWS). 

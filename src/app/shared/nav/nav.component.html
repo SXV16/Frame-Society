@@ -3,14 +3,14 @@
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
 
       <!-- Logo -->
-      <div class="flex items-center gap-3">
+      <a routerLink="/" class="flex items-center gap-3 cursor-pointer">
         <div class="w-10 h-10 rounded-full border border-[var(--gold)] flex items-center justify-center bg-black/50">
           <span class="material-symbols-outlined text-[var(--gold)]">movie_filter</span>
         </div>
         <span class="heading-font text-2xl tracking-widest text-white">
           RAPHAEL <span class="text-[var(--gold)]">FRAME</span> SOCIETY
         </span>
-      </div>
+      </a>
 
       <!-- Navigation Links -->
       <div class="hidden md:flex space-x-10">
@@ -37,17 +37,20 @@
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center space-x-6">
-        <a
-          class="text-white hover:text-[var(--gold)] transition-colors cursor-pointer">
-          <span class="material-symbols-outlined">search</span>
-        </a>
-        <a
-        routerLink="/cart"
-          class="text-white hover:text-[var(--gold)] transition-colors relative cursor-pointer">
+      <div class="flex items-center space-x-4 md:space-x-6">
+        <ng-container *ngIf="!user">
+          <a routerLink="/login" class="text-white hover:text-[var(--gold)] uppercase text-sm font-medium transition-colors">Login</a>
+          <a routerLink="/register" class="text-white hover:text-[var(--gold)] uppercase text-sm font-medium transition-colors">Register</a>
+        </ng-container>
+        <ng-container *ngIf="user">
+          <span class="text-white/90 text-sm truncate max-w-[120px]">{{ user.email }}</span>
+          <a *ngIf="user.role === 'admin'" routerLink="/admin/products" class="text-[var(--gold)] hover:underline text-sm">Admin</a>
+          <button type="button" (click)="logout()" class="text-white/80 hover:text-white text-sm">Logout</button>
+        </ng-container>
+        <a routerLink="/cart" class="text-white hover:text-[var(--gold)] transition-colors relative cursor-pointer">
           <span class="material-symbols-outlined">shopping_bag</span>
-          <span class="absolute -top-1 -right-1 bg-[var(--gold)] text-[var(--deep-purple)] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-            0
+          <span *ngIf="cartCount > 0" class="absolute -top-1 -right-1 bg-[var(--gold)] text-[var(--deep-purple)] text-[10px] font-bold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1">
+            {{ cartCount }}
           </span>
         </a>
       </div>

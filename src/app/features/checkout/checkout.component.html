@@ -1,0 +1,140 @@
+<div class="page">
+  <app-nav></app-nav>
+  <main class="page-main mx-auto" style="max-width: 960px;">
+    <h1 class="heading-page">Checkout</h1>
+
+    <!-- Success state -->
+    <div *ngIf="success" class="card card-elevated p-8 text-center">
+      <span class="material-symbols-outlined text-6xl text-[var(--gold)] mb-4 block">check_circle</span>
+      <h2 class="heading-card">Thank you for your order</h2>
+      <p class="text-white/80 mb-2">Order #{{ orderId }}</p>
+      <p class="text-[var(--gold)] text-sm mb-6">Transaction ID: {{ transactionId }}</p>
+      <a routerLink="/store" class="btn-primary" style="width: auto;">Continue shopping</a>
+    </div>
+
+    <!-- Checkout form -->
+    <form *ngIf="!success" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <!-- Left: Shipping & Payment -->
+        <div class="lg:col-span-3 space-y-8">
+          <!-- Shipping address -->
+          <div class="card p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-[var(--gold)]">location_on</span>
+              <h2 class="heading-section mb-0">Shipping address</h2>
+            </div>
+            <p class="text-white/70 text-sm mb-4">Enter the address where you’d like your order delivered.</p>
+            <div class="space-y-4">
+              <div>
+                <label class="input-label" for="checkout-name">Full name</label>
+                <input id="checkout-name" formControlName="name" type="text" class="input input--light" placeholder="As it appears on your ID" />
+                <span class="input-hint">First and last name</span>
+              </div>
+              <div>
+                <label class="input-label" for="checkout-address">Street address</label>
+                <input id="checkout-address" formControlName="address" type="text" class="input input--light" placeholder="Street address, P.O. box, or company name" />
+                <span class="input-hint">Include apartment, suite, or unit if applicable</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="input-label" for="checkout-city">City</label>
+                  <input id="checkout-city" formControlName="city" type="text" class="input input--light" placeholder="City" />
+                </div>
+                <div>
+                  <label class="input-label" for="checkout-zip">ZIP / Postal code</label>
+                  <input id="checkout-zip" formControlName="zip" type="text" class="input input--light" placeholder="ZIP or postal code" />
+                  <span class="input-hint">Required for delivery</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment method -->
+          <div class="card p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-[var(--gold)]">credit_card</span>
+              <h2 class="heading-section mb-0">Payment method</h2>
+            </div>
+            <p class="text-white/70 text-sm mb-4">Demo payment — no real charges. Use the prefilled test values or any 12+ digit number.</p>
+            <div class="space-y-4">
+              <div>
+                <label class="input-label" for="checkout-cardNumber">Card number</label>
+                <input id="checkout-cardNumber" formControlName="cardNumber" type="text" class="input input--light" placeholder="1234 5678 9012 3456" maxlength="19" />
+                <span class="input-hint">Enter digits only; spaces are optional</span>
+              </div>
+              <div>
+                <label class="input-label" for="checkout-cardName">Name on card</label>
+                <input id="checkout-cardName" formControlName="cardName" type="text" class="input input--light" placeholder="Name as shown on card" />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="input-label" for="checkout-expiry">Expiration date</label>
+                  <input id="checkout-expiry" formControlName="expiry" type="text" class="input input--light" placeholder="MM/YY" maxlength="5" />
+                  <span class="input-hint">e.g. 12/28</span>
+                </div>
+                <div>
+                  <label class="input-label" for="checkout-cvc">Security code (CVC)</label>
+                  <input id="checkout-cvc" formControlName="cvc" type="text" class="input input--light" placeholder="123" maxlength="4" />
+                  <span class="input-hint">3 digits on back of card</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-white/60 text-sm">
+              <span class="material-symbols-outlined text-base">lock</span>
+              <span>Your payment information is secure (demo mode)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Order summary -->
+        <div class="lg:col-span-2">
+          <div class="card card-elevated p-6 sticky top-24">
+            <h2 class="heading-section mb-4">Order summary</h2>
+            <p class="text-white/70 text-sm mb-4">{{ items.length }} item(s) in your order</p>
+
+            <ul class="space-y-4 mb-6 max-h-64 overflow-y-auto">
+              <li *ngFor="let item of items" class="flex gap-3 text-sm text-white">
+                <img [src]="imageUrl(item)" [alt]="item.title" class="w-16 h-16 object-cover rounded flex-shrink-0" />
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium truncate">{{ item.title }}</p>
+                  <p class="text-white/60 text-xs">Qty: {{ item.quantity }}</p>
+                  <p class="text-[var(--gold)] font-semibold mt-1">${{ (item.price * item.quantity) | number:'1.2-2' }}</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="border-t border-[var(--border-default)] pt-4 space-y-2">
+              <div class="flex justify-between text-white/80 text-sm">
+                <span>Subtotal</span>
+                <span>${{ total | number:'1.2-2' }}</span>
+              </div>
+              <div class="flex justify-between text-white/80 text-sm">
+                <span>Shipping</span>
+                <span class="text-green-400">Free</span>
+              </div>
+              <div class="flex justify-between text-white font-bold pt-2 border-t border-[var(--border-default)]">
+                <span>Order total</span>
+                <span class="text-[var(--gold)] text-lg">${{ total | number:'1.2-2' }}</span>
+              </div>
+            </div>
+
+            <p *ngIf="error" class="alert alert-error mt-4">{{ error }}</p>
+            <button type="submit" [disabled]="loading || items.length === 0" class="btn-primary mt-6 w-full">
+              <span class="material-symbols-outlined" *ngIf="!loading">lock</span>
+              {{ loading ? 'Processing…' : 'Place order (demo)' }}
+            </button>
+            <p class="text-center text-white/50 text-xs mt-3">By placing your order you agree to our terms (demo checkout).</p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="!success && items.length === 0" class="card p-8 text-center">
+      <p class="text-white/80 mb-4">Your cart is empty.</p>
+      <a routerLink="/store" class="link-primary inline-flex items-center gap-2">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        Continue shopping
+      </a>
+    </div>
+  </main>
+</div>
