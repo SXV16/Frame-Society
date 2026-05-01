@@ -1,11 +1,15 @@
--- Run this in MySQL to create tables (e.g. mysql -u root -p raphael_frame_society < schema.sql)
+-- Run this in MySQL to create tables
+-- Example:
+--   mysql -u root -p < schema.sql
 
-CREATE DATABASE IF NOT EXISTS raphael_frame_society;
+CREATE DATABASE IF NOT EXISTS raphael_frame_society
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 USE raphael_frame_society;
 
 CREATE TABLE IF NOT EXISTS categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL UNIQUE,
   description TEXT
 );
 
@@ -82,7 +86,10 @@ CREATE TABLE IF NOT EXISTS payments (
 );
 
 -- Optional: seed for testing (run once)
--- INSERT INTO categories (name, description) VALUES ('Anime', 'Anime-inspired frames');
+-- INSERT INTO categories (name, description) VALUES
+--   ('Anime', 'Anime-inspired frames'),
+--   ('Cinema', 'Cinema-inspired frames'),
+--   ('Gaming', 'Gaming-inspired frames');
 -- INSERT INTO products (title, description, price, images, category_id, sizes, stock_status, rating, reviews_count, tags)
 --   VALUES ('Aurora Frame', 'Beautiful anime-style frame', 49.99, '["/img/aurora1.jpg"]', 1, '["Small","Medium","Large"]', TRUE, 4.5, 10, '["BESTSELLER"]');
 -- INSERT INTO users (email, name, role) VALUES ('buyer@example.com', 'Buyer', 'buyer'), ('admin@example.com', 'Admin', 'admin');

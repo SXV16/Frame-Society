@@ -1,10 +1,10 @@
 <!-- home.component.html -->
 <div class="page">
   <app-nav></app-nav>
-  <div class="page-main page-main-wide mx-auto flex flex-col lg:flex-row gap-8">
+  <div class="page-main page-main-wide mx-auto flex flex-col lg:flex-row gap-8 relative z-10">
 
     <aside class="hidden lg:block w-64 shrink-0">
-      <div class="sticky top-28 space-y-8">
+      <div class="sticky top-28 space-y-8 store-sidebar-panel">
         <div>
           <h3 class="heading-section">Collections</h3>
           <ul class="space-y-3 text-sm">
@@ -29,22 +29,29 @@
           <h3 class="heading-section">Price Range</h3>
           <div class="flex items-center justify-between mb-2 text-xs text-white">
             <span>$0</span>
-            <span>$500+</span>
+            <span class="text-[#D4AF37] font-bold">{{ maxPrice >= 500 ? '$500+' : '$' + maxPrice }}</span>
           </div>
           <input
             type="range"
             class="w-full h-1 bg-[#5E239D] rounded-lg appearance-none cursor-pointer accent-[#D4AF37]"
             min="0"
             max="500"
+            step="10"
+            [(ngModel)]="maxPrice"
+            (change)="onPriceChange()"
+            aria-label="Filter by maximum price"
           />
         </div>
 
         <div>
           <h3 class="heading-section">Size</h3>
-          <div class="grid grid-cols-3 gap-2">
-            <button class="border py-1 text-xs border-[#D4AF37] bg-[#D4AF37]/10 text-white">S</button>
-            <button class="border py-1 text-xs border-[#5E239D] text-white hover:border-[#D4AF37] hover:text-[#D4AF37]">M</button>
-            <button class="border py-1 text-xs border-[#5E239D] text-white hover:border-[#D4AF37] hover:text-[#D4AF37]">L</button>
+          <div class="grid grid-cols-2 gap-2">
+            <button *ngFor="let size of sizeOptions" 
+                    class="border py-1 text-xs text-white transition-colors uppercase tracking-widest"
+                    [ngClass]="selectedSize === size ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37] font-bold' : 'border-[#5E239D] hover:border-[#D4AF37] hover:text-[#D4AF37]'"
+                    (click)="onSizeChange(size)">
+              {{ size }}
+            </button>
           </div>
         </div>
 
@@ -55,21 +62,44 @@
     <main class="flex-1">
 
       <!-- Toolbar -->
+      <h1 class="sr-only">Store Collections And Artwork</h1>
       <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <div class="text-sm text-white">
           Showing
           <span class="text-white font-bold">{{ products.length }}</span>
           results
         </div>
-        <div class="flex gap-4">
-          <select
-            (change)="onSortChange($any($event.target).value || undefined)"
-            class="input min-w-[180px]">
-            <option value="">Sort by</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="newest">Newest</option>
-          </select>
+        <div class="flex gap-4 relative z-[9999]">
+          <div class="relative min-w-[200px]">
+            <button
+              (click)="toggleSort()"
+              class="w-full bg-[#111] text-white border border-[#5E239D] py-2 px-4 pr-10 rounded cursor-pointer hover:border-[#D4AF37] focus:outline-none focus:border-[#D4AF37] text-left relative transition-colors shadow-lg shadow-black/50"
+            >
+              {{ sort === 'title_asc' ? 'A-Z' :
+                 sort === 'title_desc' ? 'Z-A' :
+                 sort === 'category_asc' ? 'Category' :
+                 sort === 'price_asc' ? 'Price: Low to High' :
+                 sort === 'price_desc' ? 'Price: High to Low' :
+                 sort === 'newest' ? 'Newest' : 'Sort by ...' }}
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#D4AF37] transition-transform duration-300" [class.rotate-180]="isSortOpen">
+                keyboard_arrow_down
+              </span>
+            </button>
+
+            <!-- Dropdown Options -->
+            <div
+              *ngIf="isSortOpen"
+              class="absolute top-full left-0 w-full mt-2 bg-[#111] border border-[#5E239D] rounded overflow-hidden shadow-2xl"
+            >
+              <button (click)="selectSort(undefined)" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">Sort by ...</button>
+              <button (click)="selectSort('title_asc')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">A-Z</button>
+              <button (click)="selectSort('title_desc')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">Z-A</button>
+              <button (click)="selectSort('category_asc')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">Category</button>
+              <button (click)="selectSort('price_asc')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">Price: Low to High</button>
+              <button (click)="selectSort('price_desc')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white border-b border-[#5E239D]/30 text-sm">Price: High to Low</button>
+              <button (click)="selectSort('newest')" class="block w-full text-left px-4 py-2 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-colors text-white text-sm">Newest</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -77,13 +107,13 @@
       <p *ngIf="loading" class="text-white">Loading…</p>
       <div *ngIf="!loading && products.length === 0" class="text-white/80">No products found.</div>
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div *ngFor="let product of products" class="group card overflow-hidden flex flex-col hover:border-[var(--gold)] transition-all duration-300 flex-col">
+        <div *ngFor="let product of products; let i = index" class="group card overflow-hidden flex flex-col hover:border-[var(--gold)] transition-all duration-300 flex-col">
           <div class="relative aspect-[3/4] overflow-hidden bg-black">
             <a [routerLink]="['/store/product', product.id]" class="block w-full h-full">
-              <img [src]="productImage(product)" [alt]="product.title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+              <img [ngSrc]="productImage(product)" [alt]="product.title" fill [priority]="i < 3" class="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
             </a>
             <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-              <button (click)="addToCart(product.id); $event.preventDefault()" class="btn-primary w-full py-2 text-sm flex items-center justify-center gap-2">
+              <button (click)="addToCart(product.id); $event.preventDefault()" aria-label="Add to cart" class="btn-primary w-full py-2 text-sm flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-lg">shopping_cart</span> ADD TO CART
               </button>
             </div>
@@ -91,11 +121,29 @@
           </div>
           <div class="p-4 flex-1 flex flex-col">
             <a [routerLink]="['/store/product', product.id]">
-              <h3 class="font-orbitron text-lg font-bold text-white mb-1 truncate group-hover:text-[#D4AF37] transition-colors">{{ product.title }}</h3>
+              <h3 class="site-title text-lg text-white mb-1 truncate group-hover:text-[#D4AF37] transition-colors">{{ product.title }}</h3>
             </a>
             <p class="text-xs text-white mb-3 line-clamp-2">{{ product.description || '' }}</p>
             <div class="mt-auto flex justify-between items-center border-t border-[#5E239D]/30 pt-3">
-              <div class="text-[#D4AF37] font-orbitron font-bold text-lg">${{ product.price | number:'1.2-2' }}</div>
+              <div class="flex flex-col">
+                <span class="text-[10px] text-gray-400 uppercase tracking-widest mb-1 group-hover:text-white transition-colors">Posted By: <span class="text-[var(--gold)]">{{ product.posted_by_name || 'Raphael Studio' }}</span></span>
+                <span class="text-[#D4AF37] site-title text-lg">USD ${{ product.price | number:'1.2-2' }}</span>
+                <span class="text-[10px] mt-1 uppercase font-bold tracking-widest" [class]="(product.stock_status && product.stock_count > 0) ? 'text-green-500' : 'text-red-500'">{{ (product.stock_status && product.stock_count > 0) ? (product.stock_count >= 9 ? '9+ in stock' : (product.stock_count + ' in stock')) : 'Out of stock' }}</span>
+              </div>
+              <div class="flex flex-col items-end">
+                <div class="flex items-center gap-1 mb-1" title="{{ product.rating || 0 }} stars">
+                  <div class="flex">
+                    <span class="material-symbols-outlined text-[13px] transition-colors" *ngFor="let s of [1,2,3,4,5]" 
+                          [ngClass]="(product.rating || 0) >= s ? 'text-[var(--gold)] drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : ((product.rating || 0) >= s - 0.5 ? 'text-[var(--gold)] opacity-80' : 'text-gray-700 opacity-40')">
+                      {{ (product.rating || 0) >= s ? 'star' : ((product.rating || 0) >= s - 0.5 ? 'star_half' : 'star') }}
+                    </span>
+                  </div>
+                  <span class="text-[10px] text-gray-500 font-bold ml-1">({{ product.reviews_count || 0 }})</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="productSizes(product).length > 0" class="flex gap-2 mt-3 flex-wrap">
+              <span *ngFor="let size of productSizes(product)" class="text-[10px] uppercase border border-[#5E239D]/50 text-gray-400 px-2 py-1 rounded-sm group-hover:border-[var(--gold)]/50 group-hover:text-[var(--gold)] transition-colors">{{ size }}</span>
             </div>
           </div>
         </div>
@@ -112,43 +160,33 @@
         <div>
           <div class="flex items-center gap-3 mb-4">
             <span class="material-symbols-outlined text-3xl gold-text">photo_camera_back</span>
-            <h2 class="font-orbitron text-lg font-bold tracking-wider text-white">RAPHAEL</h2>
+            <h2 class="site-wordmark text-lg text-white">RAPHAEL</h2>
           </div>
           <p class="text-xs text-white leading-relaxed">Anime Made Us. Cinema Shaped Us. Gaming Leveled Us. Raphael Frames Us.</p>
         </div>
 
         <div>
-          <h4 class="font-orbitron text-white font-bold mb-4">Shop</h4>
+          <h4 class="site-kicker text-white mb-4">Shop</h4>
           <ul class="space-y-2 text-xs text-white">
-            <li><a class="hover:text-[#D4AF37]" href="#store">All Products</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#new-arrivals">New Arrivals</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#best-sellers">Best Sellers</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#collections">Collections</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/store">All Products</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/store">New Arrivals</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/store">Best Sellers</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/store">Collections</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="font-orbitron text-white font-bold mb-4">Help</h4>
+          <h4 class="site-kicker text-white mb-4">Help</h4>
           <ul class="space-y-2 text-xs text-white">
-            <li><a class="hover:text-[#D4AF37]" href="#shipping">Shipping &amp; Returns</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#faq">FAQ</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#privacy">Privacy Policy</a></li>
-            <li><a class="hover:text-[#D4AF37]" href="#terms">Terms &amp; Conditions</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/support">Shipping &amp; Returns</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/support">FAQ</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/legal">Privacy Policy</a></li>
+            <li><a class="hover:text-[#D4AF37]" routerLink="/legal">Terms &amp; Conditions</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="font-orbitron text-white font-bold mb-4">Social</h4>
-          <!-- <div class="flex gap-4">
-            
-              *ngFor="let social of socials"
-              class="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
-              [href]="social.url"
-              target="_blank"
-              rel="noopener noreferrer">
-              {{ social.label }}
-            
-          </div> -->
+          <h4 class="site-kicker text-white mb-4">Social</h4>
         </div>
 
       </div>

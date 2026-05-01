@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../../../core/services/products.service';
 import { CategoriesService } from '../../../core/services/categories.service';
@@ -13,6 +13,9 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./admin-products.component.css'],
 })
 export class AdminProductsComponent implements OnInit {
+  @ViewChild('imageFileInput') imageFileInput?: ElementRef<HTMLInputElement>;
+  readonly sizeOptions = ['4x6', '5x7', '8x10', '11x14', '16x20', '18x24', '24x36', 'Small', 'Medium', 'Large'];
+  readonly tagOptions = ['BESTSELLER', 'NEW', 'LIMITED', 'SALE', 'TRENDING', 'EXCLUSIVE', 'PREMIUM', 'POPULAR'];
   products: Product[] = [];
   categories: Category[] = [];
   loading = true;
@@ -22,10 +25,13 @@ export class AdminProductsComponent implements OnInit {
   form: FormGroup;
   editingId: number | null = null;
   showForm = false;
-  deleteConfirmId: number | null = null;
+  productToDelete: { id: number, title: string } | null = null;
+
   selectedFiles: File[] = [];
   uploading = false;
   uploadError: string | null = null;
+  sizesOpen = false;
+  tagsOpen = false;
 
   constructor(
     private productsService: ProductsService,
@@ -39,15 +45,22 @@ export class AdminProductsComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       category_id: [null as number | null],
       imagesStr: [''],
-      sizesStr: [''],
+      sizes: [[]],
       stock_status: [true],
-      tagsStr: [''],
+      stock_count: [1, [Validators.required, Validators.min(0)]],
+      tags: [[]],
     });
   }
 
   ngOnInit(): void {
     this.loadProducts();
     this.categoriesService.getCategories().subscribe((c) => (this.categories = c));
+  }
+
+  @HostListener('document:click')
+  closeDropdowns(): void {
+    this.sizesOpen = false;
+    this.tagsOpen = false;
   }
 
   loadProducts(): void {
@@ -67,9 +80,10 @@ export class AdminProductsComponent implements OnInit {
       price: 0,
       category_id: null,
       imagesStr: '',
-      sizesStr: '',
+      sizes: [],
       stock_status: true,
-      tagsStr: '',
+      stock_count: 1,
+      tags: [],
     });
     this.showForm = true;
     this.error = null;
@@ -84,9 +98,10 @@ export class AdminProductsComponent implements OnInit {
       price: p.price,
       category_id: p.category_id,
       imagesStr: this.toStr(p.images),
-      sizesStr: this.toStr(p.sizes),
+      sizes: this.strToArray(p.sizes),
       stock_status: p.stock_status,
-      tagsStr: this.toStr(p.tags),
+      stock_count: p.stock_count ?? 0,
+      tags: this.strToArray(p.tags),
     });
     this.showForm = true;
     this.error = null;
@@ -97,6 +112,8 @@ export class AdminProductsComponent implements OnInit {
     this.showForm = false;
     this.editingId = null;
     this.error = null;
+    this.sizesOpen = false;
+    this.tagsOpen = false;
   }
 
   private toStr(val: string[] | string | null | undefined): string {
@@ -113,8 +130,21 @@ export class AdminProductsComponent implements OnInit {
     return '';
   }
 
-  private strToArray(s: string): string[] {
-    if (!s || !s.trim()) return [];
+  private strToArray(val: string[] | string | null | undefined): string[] {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'string') {
+      try {
+        const arr = JSON.parse(val);
+        return Array.isArray(arr) ? arr : this.splitStr(val);
+      } catch {
+        return this.splitStr(val);
+      }
+    }
+    return [];
+  }
+
+  private splitStr(s: string): string[] {
     return s.split(',').map((x) => x.trim()).filter(Boolean);
   }
 
@@ -124,8 +154,50 @@ export class AdminProductsComponent implements OnInit {
     this.selectedFiles = files ? Array.from(files) : [];
   }
 
+  openFilePicker(): void {
+    this.imageFileInput?.nativeElement.click();
+  }
+
+  toggleDropdown(kind: 'sizes' | 'tags', event: Event): void {
+    event.stopPropagation();
+    if (kind === 'sizes') {
+      this.sizesOpen = !this.sizesOpen;
+      this.tagsOpen = false;
+      return;
+    }
+
+    this.tagsOpen = !this.tagsOpen;
+    this.sizesOpen = false;
+  }
+
+  selectedSummary(controlName: 'sizes' | 'tags', emptyLabel: string): string {
+    const values = this.form.get(controlName)?.value as string[] | null;
+    return values && values.length ? values.join(', ') : emptyLabel;
+  }
+
+  isSelected(controlName: 'sizes' | 'tags', option: string): boolean {
+    const values = (this.form.get(controlName)?.value as string[] | null) || [];
+    return values.includes(option);
+  }
+
+  toggleOption(controlName: 'sizes' | 'tags', option: string, event: Event): void {
+    event.stopPropagation();
+    const control = this.form.get(controlName);
+    const current = ((control?.value as string[] | null) || []).slice();
+    const next = current.includes(option)
+      ? current.filter((value) => value !== option)
+      : [...current, option];
+
+    control?.setValue(next);
+    control?.markAsDirty();
+  }
+
   uploadImages(): void {
-    if (!this.selectedFiles.length) return;
+    if (!this.selectedFiles.length) {
+      this.openFilePicker();
+      return;
+    }
+
     this.uploading = true;
     this.uploadError = null;
 
@@ -148,6 +220,10 @@ export class AdminProductsComponent implements OnInit {
           const current = (ctrl?.value as string) || '';
           const appended = urls.join(', ');
           ctrl?.setValue(current ? `${current}, ${appended}` : appended);
+          this.selectedFiles = [];
+          if (this.imageFileInput?.nativeElement) {
+            this.imageFileInput.nativeElement.value = '';
+          }
           this.uploading = false;
         },
         error: (err) => {
@@ -164,15 +240,19 @@ export class AdminProductsComponent implements OnInit {
     this.success = null;
     this.saving = true;
     const v = this.form.value;
+    const stockCount = v.stock_status
+      ? (v.stock_count != null ? parseInt(v.stock_count, 10) : 1)
+      : 0;
     const payload: Partial<Product> = {
       title: v.title,
       description: v.description || null,
       price: parseFloat(v.price),
       category_id: v.category_id ? parseInt(v.category_id, 10) : null,
       images: this.strToArray(v.imagesStr).length ? this.strToArray(v.imagesStr) : null,
-      sizes: this.strToArray(v.sizesStr).length ? this.strToArray(v.sizesStr) : null,
+      sizes: Array.isArray(v.sizes) && v.sizes.length ? v.sizes : null,
       stock_status: !!v.stock_status,
-      tags: this.strToArray(v.tagsStr).length ? this.strToArray(v.tagsStr) : null,
+      stock_count: Number.isNaN(stockCount) ? 0 : stockCount,
+      tags: Array.isArray(v.tags) && v.tags.length ? v.tags : null,
     };
 
     const req = this.editingId
@@ -193,25 +273,27 @@ export class AdminProductsComponent implements OnInit {
     });
   }
 
-  confirmDelete(id: number): void {
-    this.deleteConfirmId = id;
+  openDeleteModal(id: number, title: string): void {
+    this.productToDelete = { id, title };
   }
 
-  cancelDelete(): void {
-    this.deleteConfirmId = null;
+  cancelDeleteModal(): void {
+    this.productToDelete = null;
   }
 
-  deleteProduct(id: number): void {
+  confirmDeleteModal(): void {
+    if (!this.productToDelete) return;
+    const id = this.productToDelete.id;
     this.error = null;
     this.productsService.deleteProduct(id).subscribe({
       next: () => {
-        this.deleteConfirmId = null;
+        this.productToDelete = null;
         this.success = 'Product deleted.';
         this.loadProducts();
       },
       error: (err) => {
         this.error = err.error?.error || err.message || 'Delete failed.';
-        this.deleteConfirmId = null;
+        this.productToDelete = null;
       },
     });
   }

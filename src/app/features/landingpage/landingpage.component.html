@@ -5,27 +5,26 @@
   <app-nav></app-nav>
   
   <!-- Hero Section -->
-  <header class="relative w-full h-screen flex items-center justify-center overflow-hidden hero-bg">
-    <div class="absolute inset-0 bg-gradient-to-b from-[var(--deep-purple)]/80 via-[var(--deep-purple)]/40 to-black z-10"></div>
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-0"></div>
+  <header class="relative w-full min-h-screen pt-32 pb-40 flex items-center justify-center overflow-hidden bg-[#5f2d86]">
+    <!-- Hero background tuned to the rosy lavender glow in the image -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[#b777d8] via-[#8c4fbb] to-[#5f2d86] z-0"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,214,244,0.34),transparent_52%)] z-0"></div>
+    
+    <!-- Lower Theme Fade Transition -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#7a43a4]/48 via-[72%] to-black z-[2]"></div>
 
-    <div class="relative z-20 container mx-auto px-6 text-center flex flex-col items-center">
+    <div class="relative z-20 container mx-auto px-6 text-center flex flex-col items-center pt-10">
 
-      <!-- Icon -->
-      <div class="mb-8 p-6 rounded-full border border-[var(--gold)]/30 bg-[var(--deep-purple)]/30 backdrop-blur-sm shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-        <span class="material-symbols-outlined text-6xl text-[var(--gold)] text-glow">camera_roll</span>
-      </div>
+      <!-- Circular/Oval Faded Image exactly matches source aspect ratio -->
+      <img src="/assets/rquel-home-frame.jpg" class="h-[55vh] md:h-[65vh] w-[22rem] md:w-[30rem] max-w-full mb-6 pointer-events-none object-fill" style="mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);">
 
-      <!-- Hero Heading -->
-      <h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight drop-shadow-2xl">
-        <span class="block mb-2">ANIME MADE US.</span>
-        <span class="block mb-2 text-gray-300">CINEMA SHAPED US.</span>
-        <span class="block mb-2">GAMING LEVELED US.</span>
-        <span class="block text-[var(--gold)] text-glow mt-4">RAPHAEL FRAMES US.</span>
+      <!-- Hero Heading (Text embedded in image asset) -->
+      <h1 class="sr-only">
+        ANIME MADE US. CINEMA SHAPED US. GAMING LEVELED US. RAPHAEL FRAMES US.
       </h1>
 
       <!-- Subtitle -->
-      <p class="text-gray-300 text-lg md:text-xl max-w-2xl mb-12 font-light tracking-wide leading-relaxed">
+      <p class="landing-hero-copy max-w-4xl mb-20 px-4">
         The premiere society for collectors, viewers, and gamers. Curated frames, exclusive merchandise, and a community built on obsession.
       </p>
 
@@ -33,7 +32,7 @@
       <a routerLink="/store"
         class="group relative inline-flex px-10 py-4 bg-transparent overflow-hidden rounded-sm transition-all duration-300 border border-[var(--gold)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] cursor-pointer no-underline">
         <div class="absolute inset-0 w-0 bg-[var(--gold)] transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
-        <span class="relative sci-fi-font font-bold text-[var(--gold)] tracking-[0.2em] group-hover:text-white transition-colors duration-300 flex items-center gap-3">
+        <span class="landing-hero-cta relative text-[var(--gold)] group-hover:text-white transition-colors duration-300 flex items-center gap-3">
           ENTER WEBSITE <span class="material-symbols-outlined text-lg">arrow_forward</span>
         </span>
       </a>
@@ -49,102 +48,100 @@
 
   <!-- Curated Collections Section -->
   <section class="py-24 bg-black relative">
-    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
+    <div class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-[#34114e] via-[#14071f] to-transparent z-10"></div>
 
     <div class="container mx-auto px-6 relative z-20">
 
       <!-- Section Header -->
       <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-[var(--gold)]/20 pb-6">
         <div>
-          <h2 class="text-4xl md:text-5xl text-white mb-2">Curated Collections</h2>
-          <p class="text-gray-400 font-light">Explore our premium selection of frames and merchandise</p>
+          <h2 class="site-title text-4xl md:text-5xl text-white mb-2">Curated Collections</h2>
+          <p class="site-script-accent text-[#d7bddf] text-2xl md:text-3xl">Explore our premium selection of frames and merchandise</p>
         </div>
-        <a
-          class="text-[var(--gold)] hover:text-white transition-colors uppercase text-sm tracking-widest mt-6 md:mt-0 flex items-center gap-2 cursor-pointer">
+        <a routerLink="/store"
+          class="site-kicker text-[var(--gold)] hover:text-white transition-colors mt-6 md:mt-0 flex items-center gap-2 cursor-pointer">
           View All Categories <span class="material-symbols-outlined text-sm">chevron_right</span>
         </a>
       </div>
 
       <!-- Collection Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-        <a
-          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
-
-          <img
-            src="https://via.placeholder.com/400x600"
-            alt="Anime Collection"
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
-          />
-
-          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
-
-          <div class="absolute bottom-0 left-0 p-8 w-full">
-            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
-              Category 01
-            </span>
-            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
-              Anime Collection
-            </h3>
-            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-              Premium frames featuring iconic anime scenes and characters.
-            </p>
-            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+        <!-- CARD 1 -->
+        <div class="group [perspective:1000px] h-[500px]">
+          <div class="relative w-full h-full duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] rounded-sm border border-gray-800 group-hover:border-[var(--gold)]/30 transition-all shadow-2xl">
+            <!-- Front -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] overflow-hidden bg-black cursor-default rounded-sm">
+              <img src="assets/categories/anime-collection.png" alt="Anime Collection" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+              <div class="absolute bottom-0 left-0 p-8 w-full cursor-pointer">
+                <span class="site-kicker text-[var(--gold)] mb-2 block">Category 01</span>
+                <h3 class="site-title text-4xl text-white mb-2">Anime Collection</h3>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-[#180B2D] to-black flex flex-col justify-center items-center p-8 text-center border overflow-hidden border-[var(--gold)]/50 rounded-sm">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-[80px]"></div>
+              <span class="material-symbols-outlined text-[var(--gold)] text-5xl mb-4 opacity-80">swords</span>
+              <h3 class="site-title text-3xl text-white mb-4">Anime Details</h3>
+              <p class="text-white/70 text-sm mb-10 leading-relaxed font-sans">
+                Experience legendary scenes and character artistry. From timeless classics to the modern frontier of animation, our expertly framed anime collection delivers profound emotional weight right to your wall.
+              </p>
+              <a routerLink="/store" [queryParams]="{category: 2}" class="btn-primary w-full shadow-lg shadow-black/50">Explore Set</a>
+            </div>
           </div>
-        </a>
+        </div>
 
-        <a
-          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
-
-          <img
-            src="https://via.placeholder.com/400x600"
-            alt="Cinema Collection"
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
-          />
-
-          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
-
-          <div class="absolute bottom-0 left-0 p-8 w-full">
-            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
-              Category 02
-            </span>
-            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
-              Cinema Collection
-            </h3>
-            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-              Classic and modern movie frames for the discerning cinephile.
-            </p>
-            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+        <!-- CARD 2 -->
+        <div class="group [perspective:1000px] h-[500px]">
+          <div class="relative w-full h-full duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] rounded-sm border border-gray-800 group-hover:border-[var(--gold)]/30 transition-all shadow-2xl">
+            <!-- Front -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] overflow-hidden bg-black cursor-default rounded-sm">
+              <img src="assets/categories/cinema-collection.png" alt="Cinema Collection" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+              <div class="absolute bottom-0 left-0 p-8 w-full cursor-pointer">
+                <span class="site-kicker text-[var(--gold)] mb-2 block">Category 02</span>
+                <h3 class="site-title text-4xl text-white mb-2">Cinema Collection</h3>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-[#180B2D] to-black flex flex-col justify-center items-center p-8 text-center border overflow-hidden border-[var(--gold)]/50 rounded-sm">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-[80px]"></div>
+              <span class="material-symbols-outlined text-[var(--gold)] text-5xl mb-4 opacity-80">movie</span>
+              <h3 class="site-title text-3xl text-white mb-4">Cinema Legends</h3>
+              <p class="text-white/70 text-sm mb-10 leading-relaxed font-sans">
+                Classic scenes, brilliant actors, and visionary directors. Bring Hollywood’s grandest cinematic atmospheres into your space with impeccably preserved framing and dark-room stylings.
+              </p>
+              <a routerLink="/store" [queryParams]="{category: 11}" class="btn-primary w-full shadow-lg shadow-black/50">Explore Set</a>
+            </div>
           </div>
-        </a>
+        </div>
 
-        <a
-          class="group relative h-[500px] overflow-hidden rounded-sm border border-gray-800 hover:border-[var(--gold)] transition-colors duration-500 cursor-pointer">
-
-          <img
-            src="https://via.placeholder.com/400x600"
-            alt="Gaming Collection"
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
-          />
-
-          <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
-
-          <div class="absolute bottom-0 left-0 p-8 w-full">
-            <span class="text-[var(--gold)] text-xs uppercase tracking-[0.2em] mb-2 block font-bold">
-              Category 03
-            </span>
-            <h3 class="text-4xl text-white mb-2 group-hover:text-[var(--gold)] transition-colors">
-              Gaming Collection
-            </h3>
-            <p class="text-gray-400 text-sm line-clamp-2 mb-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-              Epic gaming moments framed for the ultimate gamer experience.
-            </p>
-            <div class="w-12 h-[1px] bg-[var(--gold)] group-hover:w-full transition-all duration-500"></div>
+        <!-- CARD 3 -->
+        <div class="group [perspective:1000px] h-[500px]">
+          <div class="relative w-full h-full duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] rounded-sm border border-gray-800 group-hover:border-[var(--gold)]/30 transition-all shadow-2xl">
+            <!-- Front -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] overflow-hidden bg-black cursor-default rounded-sm">
+              <img src="assets/categories/gaming-collection.png" alt="Gaming Collection" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[var(--deep-purple)] via-transparent to-transparent opacity-90"></div>
+              <div class="absolute bottom-0 left-0 p-8 w-full cursor-pointer">
+                <span class="site-kicker text-[var(--gold)] mb-2 block">Category 03</span>
+                <h3 class="site-title text-4xl text-white mb-2">Gaming Collection</h3>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-[#180B2D] to-black flex flex-col justify-center items-center p-8 text-center border overflow-hidden border-[var(--gold)]/50 rounded-sm">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-[80px]"></div>
+              <span class="material-symbols-outlined text-[var(--gold)] text-5xl mb-4 opacity-80">stadia_controller</span>
+              <h3 class="site-title text-3xl text-white mb-4">Digital Worlds</h3>
+              <p class="text-white/70 text-sm mb-10 leading-relaxed font-sans">
+                Epic quests, neon dystopias, and unforgettable gaming experiences. We’ve meticulously framed iconic gaming moments for the ultimate collector's studio space.
+              </p>
+              <a routerLink="/store" [queryParams]="{category: 12}" class="btn-primary w-full shadow-lg shadow-black/50">Explore Set</a>
+            </div>
           </div>
-        </a>
+        </div>
 
       </div>
-
     </div>
   </section>
 
@@ -158,58 +155,54 @@
         <div class="md:col-span-1">
           <div class="flex items-center gap-2 mb-6">
             <span class="material-symbols-outlined text-[var(--gold)]">movie_filter</span>
-            <span class="heading-font text-2xl tracking-widest text-white">
+            <span class="site-wordmark text-2xl text-white">
               RAPHAEL <span class="text-[var(--gold)]">FRAME</span>
             </span>
           </div>
           <p class="text-gray-500 text-sm leading-relaxed mb-6">
             The ultimate destination for pop-culture enthusiasts. We frame the moments that define generations.
           </p>
-          <div class="flex gap-4">
-            <a
-              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-sm">facebook</span>
+          <div class="flex flex-wrap gap-3 text-xs">
+            <a class="site-kicker px-3 py-2 rounded-full border border-gray-700 text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              Facebook
             </a>
-            <a
-              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-sm">twitter</span>
+            <a class="site-kicker px-3 py-2 rounded-full border border-gray-700 text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              X
             </a>
-            <a
-              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-sm">instagram</span>
+            <a class="site-kicker px-3 py-2 rounded-full border border-gray-700 text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              Instagram
             </a>
-            <a
-              class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-sm">youtube</span>
+            <a class="site-kicker px-3 py-2 rounded-full border border-gray-700 text-gray-400 hover:border-[var(--gold)] hover:text-[var(--gold)] transition-colors cursor-pointer">
+              YouTube
             </a>
           </div>
         </div>
 
         <!-- Discover Column -->
         <div>
-          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Discover</h4>
+          <h4 class="site-kicker text-white mb-6 text-sm">Discover</h4>
           <ul class="space-y-3 text-gray-500 text-sm">
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/store"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Collections
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a (click)="focusSearch($event)"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Artists
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/store"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Frames
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/about"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 About
               </a>
             </li>
@@ -218,29 +211,29 @@
 
         <!-- Support Column -->
         <div>
-          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Support</h4>
+          <h4 class="site-kicker text-white mb-6 text-sm">Support</h4>
           <ul class="space-y-3 text-gray-500 text-sm">
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/support"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Help Center
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/support"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Contact Us
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/support"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Shipping Info
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/support"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Returns
               </a>
             </li>
@@ -249,29 +242,29 @@
 
         <!-- Legal Column -->
         <div>
-          <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Legal</h4>
+          <h4 class="site-kicker text-white mb-6 text-sm">Legal</h4>
           <ul class="space-y-3 text-gray-500 text-sm">
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/legal"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Privacy Policy
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/legal"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Terms of Service
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/legal"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Cookie Policy
               </a>
             </li>
             <li>
-              <a
-                class="hover:text-[var(--gold)] transition-colors">
+              <a routerLink="/legal"
+                class="hover:text-[var(--gold)] transition-colors cursor-pointer">
                 Accessibility
               </a>
             </li>

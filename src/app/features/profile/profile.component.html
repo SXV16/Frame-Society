@@ -1,0 +1,53 @@
+<div class="page">
+  <app-nav></app-nav>
+  
+  <div class="page-main mx-auto container px-4 sm:px-6 lg:px-8 mt-12 py-12">
+    <div *ngIf="loading" class="text-white text-center py-20">Loading profile...</div>
+
+    <div *ngIf="!loading && user" class="max-w-3xl mx-auto">
+       <h1 class="font-orbitron text-4xl text-white mb-2 uppercase tracking-wide">My Profile</h1>
+       <p class="text-gray-400 text-sm mb-12">Manage your persona for buyers and sellers.</p>
+
+       <div *ngIf="errorMsg" class="alert alert-error mb-6">{{ errorMsg }}</div>
+       <div *ngIf="successMsg" class="alert alert-success mb-6">{{ successMsg }}</div>
+
+       <div class="bg-[#0b0413]/80 border border-[var(--gold)]/20 p-8 rounded-xl shadow-2xl backdrop-blur-sm grid grid-cols-1 md:grid-cols-3 gap-10">
+          
+          <div class="col-span-1 flex flex-col items-center border-r border-white/5 pr-4">
+             <div class="w-40 h-40 rounded-full border-2 border-[var(--gold)] mb-6 overflow-hidden bg-black/60 shadow-[0_0_20px_rgba(212,175,55,0.2)] flex items-center justify-center group relative cursor-pointer" (click)="openFilePicker()">
+                <img *ngIf="profile_picture_url" [src]="profile_picture_url" class="w-full h-full object-cover" />
+                <span *ngIf="!profile_picture_url" class="material-symbols-outlined text-6xl text-[var(--gold)]/50">person</span>
+                
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                   <span class="material-symbols-outlined text-white text-3xl drop-shadow-md">upload</span>
+                </div>
+             </div>
+             
+             <input type="file" #imageFileInput (change)="onFilesSelected($event)" class="hidden" accept="image/*" />
+
+             <button (click)="openFilePicker()" [disabled]="uploading" class="btn-secondary w-full text-xs py-2 uppercase tracking-widest font-bold">
+               {{ uploading ? 'Uploading...' : 'Change Avatar' }}
+             </button>
+
+             <div class="mt-8 text-center">
+                <h3 class="text-[var(--gold)] font-bold text-xl">{{ user.name }}</h3>
+                <span class="text-gray-500 uppercase tracking-widest text-[10px]">{{ user.role }} Profile</span>
+             </div>
+          </div>
+
+          <div class="col-span-1 md:col-span-2">
+             <h3 class="font-orbitron font-bold text-lg text-white mb-6 uppercase border-b border-white/10 pb-3">Biography</h3>
+             
+             <textarea [(ngModel)]="bio" rows="6" class="w-full bg-black/40 border border-[var(--gold)]/30 rounded-md text-white p-4 focus:border-[var(--gold)] outline-none transition-colors placeholder-gray-600 mb-6 font-sans resize-none" placeholder="Share a short bio about yourself as a collector or seller..."></textarea>
+
+             <div class="flex justify-end pt-4 border-t border-white/10">
+                <button (click)="saveProfile()" [disabled]="saving" class="btn-primary px-10 py-3 uppercase tracking-widest font-bold text-sm">
+                  {{ saving ? 'Saving...' : 'Save Profile' }}
+                </button>
+             </div>
+          </div>
+       </div>
+
+    </div>
+  </div>
+</div>

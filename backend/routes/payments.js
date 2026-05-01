@@ -11,7 +11,7 @@ router.post('/payments', async (req, res) => {
     }
 
     const [orderRows] = await db.query(
-      'SELECT id, total, status FROM orders WHERE id = ?',
+      'SELECT id, total, status, session_id FROM orders WHERE id = ?',
       [order_id]
     );
     if (orderRows.length === 0) {
@@ -33,7 +33,17 @@ router.post('/payments', async (req, res) => {
       ]
     );
 
+    // Update order status
     await db.query("UPDATE orders SET status = 'paid' WHERE id = ?", [order_id]);
+
+    // Decrement stock count
+    const session_id = orderRows[0].session_id;
+    if (session_id) {
+       const [cartRows] = await db.query('SELECT product_id, quantity FROM cart_items WHERE session_id = ?', [session_id]);
+       for(const item of cartRows) {
+         await db.query('UPDATE products SET stock_count = GREATEST(0, stock_count - ?) WHERE id = ?', [item.quantity, item.product_id]);
+       }
+    }
 
     res.status(201).json({
       success: true,

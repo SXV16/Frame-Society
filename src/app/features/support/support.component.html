@@ -1,0 +1,48 @@
+<div class="page mt-24">
+  <div class="absolute inset-0 bg-gradient-to-b from-[#150029] via-[#0F0518] to-black z-[-1] pointer-events-none"></div>
+  <app-nav></app-nav>
+  
+  <div class="container mx-auto px-6 py-12 max-w-4xl text-white font-light text-center relative z-10">
+      <div class="mb-12 inline-block">
+        <span class="material-symbols-outlined text-5xl text-[var(--gold)] mb-4 text-glow">support_agent</span>
+        <h1 class="text-4xl text-white font-bold mb-2 tracking-widest uppercase font-orbitron drop-shadow-md">Help <span class="text-[var(--gold)]">Center</span></h1>
+        <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-50 mt-2"></div>
+      </div>
+      
+      <p class="mb-12 text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">System diagnostics and common platform resolutions. Click on any protocol below to reveal the required step-by-step resolution.</p>
+      
+      <!-- FAQ Accordion Container -->
+      <div class="text-left space-y-4">
+        <ng-container *ngFor="let faq of faqs; let i = index">
+          <div class="border border-[var(--gold)]/20 bg-[#1A0B2E]/60 backdrop-blur-md rounded-sm overflow-hidden transition-all duration-300 hover:border-[var(--gold)]/50">
+            
+            <!-- Accordion Header -->
+            <button (click)="toggleFaq(i)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none group">
+              <h2 class="text-xl text-gray-200 font-medium group-hover:text-[var(--gold)] transition-colors">{{ faq.question }}</h2>
+              <span class="material-symbols-outlined text-[var(--gold)] transition-transform duration-300" [ngClass]="{'rotate-180': faq.expanded}">
+                keyboard_arrow_down
+              </span>
+            </button>
+            
+            <!-- Accordion Body (Steps) -->
+            <div *ngIf="faq.expanded" class="p-6 pt-0 border-t border-white/5 bg-black/40">
+              <ol class="list-decimal list-outside ml-5 space-y-3 mt-4 text-gray-400 text-sm leading-relaxed marker:text-[var(--gold)] marker:font-bold">
+                <li *ngFor="let step of faq.steps" class="pl-2">
+                  <span class="text-gray-300">{{ step }}</span>
+                </li>
+              </ol>
+            </div>
+            
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- General Contact Block -->
+      <div class="mt-16 p-8 border border-white/10 bg-[#0F0518] text-center rounded-sm">
+          <span class="material-symbols-outlined text-[var(--gold)] text-3xl mb-4">mail</span>
+          <h2 class="text-2xl text-white mb-2 font-orbitron">Still experiencing anomalies?</h2>
+          <p class="text-sm text-gray-400 mb-6">Our dedicated support architects are online.</p>
+          <p class="text-[var(--gold)] font-bold tracking-widest">support&#64;raphaelframe.com</p>
+      </div>
+  </div>
+</div>

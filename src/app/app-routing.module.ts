@@ -11,6 +11,10 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { AdminProductsComponent } from './features/admin/admin-products/admin-products.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
+import { AboutComponent } from './features/about/about.component';
+import { SupportComponent } from './features/support/support.component';
+import { LegalComponent } from './features/legal/legal.component';
+import { ProfileComponent } from './features/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
@@ -26,7 +30,10 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'admin', redirectTo: 'admin/products', pathMatch: 'full' },
   { path: 'admin/products', component: AdminProductsComponent, canActivate: [AdminGuard] },
-  { path: 'adult', component: AdultsSectionComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'about', component: AboutComponent },
+  { path: 'support', component: SupportComponent },
+  { path: 'legal', component: LegalComponent }
 ];
 
 @NgModule({

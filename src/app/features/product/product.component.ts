@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
 import { CartService } from '../../core/services/cart.service';
-import { Product } from '../../core/models/product.model';
+import { AuthService } from '../../core/services/auth.service';
+import { Product, Review } from '../../core/models/product.model';
 
 @Component({
   selector: 'app-product',
@@ -16,10 +17,21 @@ export class ProductComponent implements OnInit {
   selectedSize: string | null = null;
   addSuccess = false;
 
+  // Review System
+  reviews: Review[] = [];
+  newRating = 5;
+  newComment = '';
+  isLoggedIn = false;
+  submittingReview = false;
+  hoverRating = 0;
+  bottomHoverRating = 0;
+  topRatingInteracted = false;
+
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +46,12 @@ export class ProductComponent implements OnInit {
       error: () => (this.product = null),
       complete: () => (this.loading = false),
     });
+
+    this.productsService.getReviews(+id).subscribe(
+      (revs) => (this.reviews = revs)
+    );
+
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   parseSizes(sizes: Product['sizes']): string[] {
@@ -77,5 +95,49 @@ export class ProductComponent implements OnInit {
       },
       error: () => {},
     });
+  }
+
+  submitReview(): void {
+    if (!this.product || !this.isLoggedIn) return;
+    const currentProductId = this.product.id;
+    this.submittingReview = true;
+    this.productsService.submitReview(currentProductId, { rating: this.newRating, comment: this.newComment }).subscribe({
+      next: (res) => {
+        // Update local object to reflect exact calculated average from response!
+        if (this.product) {
+          this.product.rating = res.newRating;
+          this.product.reviews_count = res.newCount;
+        }
+        // Reload reviews feed
+        this.productsService.getReviews(currentProductId).subscribe((revs) => {
+          this.reviews = revs;
+        });
+        // Clear input form
+        this.newComment = '';
+        this.newRating = 5;
+        this.submittingReview = false;
+      },
+      error: () => {
+        this.submittingReview = false;
+        alert('Failed to submit review. Try again.');
+      }
+    });
+  }
+
+  setTopRating(rating: number): void {
+    if (!this.isLoggedIn) {
+       alert("Please login to leave a review.");
+       return;
+    }
+    this.newRating = rating;
+    this.topRatingInteracted = true;
+    this.scrollToReviews();
+  }
+
+  scrollToReviews(): void {
+    const el = document.getElementById('reviews-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

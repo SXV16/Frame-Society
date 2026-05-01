@@ -1,2 +1,14 @@
- 
 <router-outlet></router-outlet>
+
+<!-- Terms Modal -->
+<div *ngIf="showTermsModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+  <div class="bg-[var(--card-bg)] border border-[var(--gold)] p-8 max-w-lg w-full rounded-lg text-center relative z-[101]">
+    <h2 class="font-orbitron text-2xl text-[var(--gold)] mb-4">Terms and Conditions</h2>
+    <p class="text-white mb-6 text-sm">
+      Please review and accept our updated <a routerLink="/legal" (click)="showTermsModal = false" class="text-[var(--gold)] underline hover:text-white transition-colors">Terms &amp; Conditions</a> to continue using Raphael Frame Society.
+    </p>
+    <div class="flex flex-col gap-4">
+      <button (click)="acceptTerms()" class="btn-primary w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]">I ACCEPT</button>
+    </div>
+  </div>
+</div>

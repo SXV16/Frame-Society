@@ -3,6 +3,8 @@ export interface User {
   email: string;
   name: string | null;
   role: 'buyer' | 'admin';
+  bio?: string;
+  profile_picture_url?: string;
 }
 
 export interface LoginResponse {

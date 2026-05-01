@@ -1,13 +1,13 @@
 <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-50 bg-[var(--deep-purple)]/90 backdrop-blur-md border-b border-[var(--gold)]/30">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+  <nav class="fixed top-0 w-full z-50 bg-gradient-to-b from-black via-black/80 to-transparent pt-2 pb-10 pointer-events-none">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center pointer-events-auto">
 
       <!-- Logo -->
       <a routerLink="/" class="flex items-center gap-3 cursor-pointer">
         <div class="w-10 h-10 rounded-full border border-[var(--gold)] flex items-center justify-center bg-black/50">
           <span class="material-symbols-outlined text-[var(--gold)]">movie_filter</span>
         </div>
-        <span class="heading-font text-2xl tracking-widest text-white">
+        <span class="site-wordmark text-xl md:text-2xl text-white">
           RAPHAEL <span class="text-[var(--gold)]">FRAME</span> SOCIETY
         </span>
       </a>
@@ -16,36 +16,57 @@
       <div class="hidden md:flex space-x-10">
         <a
           routerLink=""
-          class="nav-link text-white hover:text-[var(--gold)] uppercase text-sm tracking-widest font-medium transition-colors">
+          class="nav-link site-kicker text-white hover:text-[var(--gold)] transition-colors">
           Home
         </a>
         <a
           routerLink="/store"
-          class="nav-link text-white hover:text-[var(--gold)] uppercase text-sm tracking-widest font-medium transition-colors">
+          class="nav-link site-kicker text-white hover:text-[var(--gold)] transition-colors">
           Store
         </a>
-        <a
-          routerLink="/adult"
-          class="nav-link text-red-500 hover:text-red-400 uppercase text-sm tracking-widest font-medium transition-colors flex items-center gap-1">
-          Adult <span class="text-[10px] border border-red-500 px-1 rounded">18+</span>
-        </a>
+
         <a
           routerLink="/suggestion"
-          class="nav-link text-white hover:text-[var(--gold)] uppercase text-sm tracking-widest font-medium transition-colors">
+          class="nav-link site-kicker text-white hover:text-[var(--gold)] transition-colors">
           Suggestion
         </a>
+
+        <!-- Search Bar -->
+        <div *ngIf="isStorePage" #searchContainer class="relative group ml-4 flex items-center">
+          <form (submit)="onSearch()" class="flex items-center bg-black/40 border border-white/10 rounded-full px-4 py-2 focus-within:border-[var(--gold)] focus-within:bg-black/80 focus-within:shadow-[0_0_20px_rgba(212,175,55,0.2)] transition-all duration-300 backdrop-blur-md">
+            <span class="material-symbols-outlined text-white/40 text-[18px] mr-2 group-focus-within:text-[var(--gold)] transition-colors">search</span>
+            <input type="text" [(ngModel)]="searchQuery" name="q" placeholder="Search frame or artist..." id="nav-search-input"
+                   class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-white font-sans text-sm w-44 focus:w-64 transition-all duration-500 placeholder:text-white/30 placeholder:tracking-wider placeholder:font-light"
+                   (focus)="showSuggestions = true" autocomplete="off">
+          </form>
+          
+          <!-- Suggestions Dropdown -->
+          <div *ngIf="showSuggestions" class="absolute top-full left-0 mt-2 w-64 bg-black border border-[var(--gold)]/30 rounded-lg shadow-2xl overflow-hidden z-50 animate-fade-in-up">
+            <div class="px-4 py-2 border-b border-white/10">
+              <span class="text-xs text-[var(--gold)] font-bold tracking-widest uppercase">Popular Artists</span>
+            </div>
+            <ul class="text-sm">
+              <li *ngFor="let artist of popularArtists">
+                <button type="button" (mousedown)="selectArtist(artist)" class="w-full text-left px-4 py-3 text-white/80 hover:text-[var(--gold)] hover:bg-white/5 transition-colors flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[14px]">brush</span>
+                  {{ artist }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Actions -->
       <div class="flex items-center space-x-4 md:space-x-6">
         <ng-container *ngIf="!user">
-          <a routerLink="/login" class="text-white hover:text-[var(--gold)] uppercase text-sm font-medium transition-colors">Login</a>
-          <a routerLink="/register" class="text-white hover:text-[var(--gold)] uppercase text-sm font-medium transition-colors">Register</a>
+          <a routerLink="/login" class="site-kicker text-white hover:text-[var(--gold)] transition-colors">Login</a>
+          <a routerLink="/register" class="site-kicker text-white hover:text-[var(--gold)] transition-colors">Register</a>
         </ng-container>
         <ng-container *ngIf="user">
-          <span class="text-white/90 text-sm truncate max-w-[120px]">{{ user.email }}</span>
-          <a *ngIf="user.role === 'admin'" routerLink="/admin/products" class="text-[var(--gold)] hover:underline text-sm">Admin</a>
-          <button type="button" (click)="logout()" class="text-white/80 hover:text-white text-sm">Logout</button>
+          <a routerLink="/profile" class="flex items-center gap-2 hover:opacity-80 transition-opacity"><div class="w-8 h-8 rounded-full border border-[var(--gold)]/50 overflow-hidden bg-black/60 flex items-center justify-center"><img *ngIf="user.profile_picture_url" [src]="user.profile_picture_url" class="w-full h-full object-cover" /><span *ngIf="!user.profile_picture_url" class="material-symbols-outlined text-[var(--gold)]/80 text-[14px]">person</span></div><span class="text-white/90 text-sm truncate max-w-[120px]">{{ user.name }}</span></a>
+          <a *ngIf="user.role === 'admin'" routerLink="/admin/products" class="site-kicker text-[var(--gold)] hover:underline text-sm">Admin</a>
+          <button type="button" (click)="logout()" class="site-kicker text-white/80 hover:text-white text-sm">Logout</button>
         </ng-container>
         <a routerLink="/cart" class="text-white hover:text-[var(--gold)] transition-colors relative cursor-pointer">
           <span class="material-symbols-outlined">shopping_bag</span>
@@ -57,3 +78,29 @@
 
     </div>
   </nav>
+
+  <!-- Logout Confirmation Modal -->
+  <div *ngIf="showLogoutConfirm" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md transition-all duration-300">
+    <div class="bg-black/90 border border-[var(--gold)]/30 rounded-xl p-8 max-w-md w-[90%] shadow-[0_0_40px_rgba(212,175,55,0.15)] relative transform transition-all duration-300 animate-fade-in-up">
+      
+      <!-- Decorative element -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-50 rounded-t-xl"></div>
+
+      <div class="flex flex-col items-center text-center mb-8">
+        <div class="w-16 h-16 rounded-full border border-[var(--gold)] flex items-center justify-center bg-black/50 mb-4 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+          <span class="material-symbols-outlined text-[var(--gold)] text-3xl opacity-80">logout</span>
+        </div>
+        <h3 class="site-kicker text-2xl text-white mb-2 tracking-widest uppercase">Departing So Soon?</h3>
+        <p class="text-white/60 font-sans text-sm">You are about to sign out of the Raphael Frame Society.</p>
+      </div>
+
+      <div class="flex sm:flex-row flex-col justify-center gap-4">
+        <button (click)="cancelLogout()" class="site-kicker px-8 py-3 rounded-none border border-white/20 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-300 text-sm tracking-widest uppercase w-full sm:w-auto">
+          Return
+        </button>
+        <button (click)="confirmLogout()" class="site-kicker px-8 py-3 rounded-none bg-[var(--gold)] text-black hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-300 text-sm tracking-widest font-bold uppercase w-full sm:w-auto">
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </div>

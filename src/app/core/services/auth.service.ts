@@ -24,6 +24,19 @@ export class AuthService {
       .pipe(tap((res) => this.setSession(res)));
   }
 
+  updateProfile(payload: { name?: string, bio?: string, profile_picture_url?: string }): Observable<{message: string}> {
+    return this.http.put<{message: string}>(`${environment.apiBaseUrl}/users/me`, payload).pipe(
+      tap(() => {
+        const u = this.currentUser$.value;
+        if (u) {
+          const updated = { ...u, ...payload };
+          localStorage.setItem(AUTH_USER_KEY, JSON.stringify(updated));
+          this.currentUser$.next(updated);
+        }
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_USER_KEY);

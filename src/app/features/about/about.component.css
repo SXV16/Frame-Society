@@ -1,0 +1,40 @@
+.about-page-main {
+  padding-top: calc(var(--space-20) + var(--space-20));
+}
+
+.about-page-title {
+  line-height: 1.08;
+  margin-top: var(--space-4);
+}
+
+.about-artwork {
+  margin: 2rem 0 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  background: rgba(7, 7, 7, 0.72);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+.about-artwork__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-artwork__caption {
+  padding: 1rem 1.25rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-top: 1px solid rgba(212, 175, 55, 0.14);
+}
+
+@media (max-width: 767px) {
+  .about-page-main {
+    padding-top: calc(var(--space-20) + var(--space-12));
+  }
+
+  .about-page-title {
+    margin-top: var(--space-3);
+  }
+}

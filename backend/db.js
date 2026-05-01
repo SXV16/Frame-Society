@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const mysql = require('mysql2/promise'); // promise version so we can use async/await
 
 // One pool is shared by all routes. It reuses connections instead of opening a new one per request.
